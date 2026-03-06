@@ -8,7 +8,7 @@
 
 </h5>
 
-https://github.com/user-attachments/assets/403ae65a-14dd-4785-8fa1-207b0135eec0
+https://github.com/user-attachments/assets/d9a4f541-925f-47ef-b3d1-ec9b73f6357c
 
 DPCache accelerates diffusion models via prediction-based caching, using dynamic programming with Path-Aware Cost Tensor (PACT) to optimize the caching schedule.
 
