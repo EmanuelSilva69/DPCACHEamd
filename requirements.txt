@@ -1,0 +1,7 @@
+diffusers==0.33.1
+torch==2.4.1
+torchvision 
+transformers 
+accelerate 
+pandas 
+tqdm
