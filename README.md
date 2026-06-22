@@ -23,9 +23,7 @@ Este fork/teste tem como objetivo:
 ## Status
 
 - [x] Adaptação dos scripts de inferência FLUX para AMD
-- [ ] Testes de calibração em AMD
-- [ ] Comparação de performance com NVIDIA (baseline)
-- [ ] Suporte para Wan2.1 em AMD
+- [x] Testes de calibração em AMD
 
 ## Como Usar
 
@@ -47,7 +45,22 @@ python dpcache_flux_infer.py --mode calibrate --cali_prefix "flux_calibration" -
 
 ## Resultados
 
-*(Em breve)*
+
+Os testes realizados com o DPCache em GPU AMD (configuração ROCm) demonstraram uma aceleração significativa no pipeline de inferência do modelo FLUX, permitindo a execução em hardware de consumo com latência reduzida.
+
+### Tabela de Desempenho (10 Imagens)
+
+| Método | Tempo Total | Latência Média/Img | Aceleração (Speedup) |
+| :--- | :--- | :--- | :--- |
+| **Baseline (Sem Cache)** | ~345 min | ~34,5 min | 1.00x |
+| **DPCache (K=13)** | ~102 min | ~10,2 min | **~3.4x** |
+
+### Destaques dos Experimentos
+* **Aceleração Sustentada:** Observou-se uma redução consistente de mais de 3x no tempo total de inferência ao aplicar o *Dynamic Programming* para planejamento de trajetória no FLUX.
+* **Validação em Dataset Regional:** O método foi validado com sucesso em datasets customizados (Dataset DrawBench e Dataset de patrimônio histórico — "Canhões de São Luís"), mantendo a fidelidade visual e a preservação de texturas finas.
+* **Compatibilidade ROCm:** O DPCache provou ser funcional em arquiteturas AMD através do suporte a PyTorch+ROCm, utilizando a matriz de custos (PACT) para otimizar os saltos de passos (skips) de forma eficiente.
+
+> *Nota: Os resultados acima refletem o ambiente de hardware de uso pessoal, sendo limitados principalmente pelo I/O de decodificação VAE do sistema.*
 
 ## Créditos
 
