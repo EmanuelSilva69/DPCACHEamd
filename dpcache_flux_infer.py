@@ -1,4 +1,8 @@
 import torch
+import torch.distributed as dist
+if not hasattr(dist, "is_initialized"):
+    dist.is_initialized = lambda: False
+
 import os
 import pandas as pd
 from tqdm import tqdm
@@ -29,7 +33,7 @@ def _load_dataset_prompts(dataset_name, sample_rule="random", sample_size=5):
 
 def run_flux(
     enable_cache=True,
-    model_path="black-forest-labs/FLUX.1-dev",
+    model_path="Freepik/flux.1-lite-8B-alpha",
     num_steps=50,
     order=2,
     cali_prefix="flux_test",
@@ -59,7 +63,11 @@ def run_flux(
     print(f"Using {len(input_prompts)} {operation} prompts")
 
     print("Loading FLUX pipeline...")
-    pipeline = DiffusionPipeline.from_pretrained(model_path, torch_dtype=torch.float16)
+    pipeline = DiffusionPipeline.from_pretrained(
+        model_path, 
+        torch_dtype=torch.bfloat16,
+        low_cpu_mem_usage=True
+    )
 
     pkl_path = f"cost_matrix_{cali_prefix}_{order}.pkl"
     if os.path.exists(pkl_path):
@@ -80,16 +88,31 @@ def run_flux(
             cost_metric=cost_metric,
         )
 
-    pipeline.to("cuda")
+    # 1. CORREÇÃO: Removido o 'p' extra
+    pipeline.enable_model_cpu_offload()
+    
+    # 2. OTIMIZAÇÃO: Fatiamento do VAE. 
+    # Impede que a RX 9060 XT dê "Out of Memory" no exato último segundo da renderização
+    pipeline.enable_vae_slicing()
+    pipeline.enable_vae_tiling()
     print("Pipeline ready!")
     if not output_path:
         output_path = cali_prefix
     os.makedirs(output_path, exist_ok=True)
 
     print(f"Running {operation}...")
+    from torch import autocast # Pode colocar isso no topo do arquivo se preferir
+
+    print(f"Running {operation}...")
     for i, prompt in enumerate(tqdm(input_prompts, desc=operation)):
-        image = pipeline(prompt, num_inference_steps=num_steps, generator=torch.Generator("cpu").manual_seed(42 + i)).images[0]
+        # O Autocast vai forçar o DPCache a conversar em BFloat16 com o FLUX!
+        with autocast(device_type="cuda", dtype=torch.bfloat16):
+            image = pipeline(prompt, num_inference_steps=num_steps, generator=torch.Generator("cpu").manual_seed(42 + i)).images[0]
+            
         image.save(f"{output_path}/output_{i:02d}.png")
+        
+        # OTIMIZAÇÃO: Limpeza de lixo da VRAM após cada imagem gerada
+        torch.cuda.empty_cache()
 
     print(f"{operation} Complete!")
 
