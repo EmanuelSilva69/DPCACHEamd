@@ -45,7 +45,6 @@ python dpcache_flux_infer.py --mode calibrate --cali_prefix "flux_calibration" -
 
 ## Resultados
 
-
 Os testes realizados com o DPCache em GPU AMD (configuração ROCm) demonstraram uma aceleração significativa no pipeline de inferência do modelo FLUX, permitindo a execução em hardware de consumo com latência reduzida.
 
 ### Tabela de Desempenho (10 Imagens)
