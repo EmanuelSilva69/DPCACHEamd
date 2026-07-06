@@ -36,9 +36,9 @@ ENV/
 # Model files (optional, uncomment if not tracking)
 # *.pkl
 
-# Logs
-*.log
-
 # OS
 .DS_Store
 Thumbs.db
+
+# Sub-repos dentro de ModelosExtra (removemos os .git p/ trackear como arquivos normais)
+ModelosExtra/**/.git/

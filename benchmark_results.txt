@@ -1,0 +1,58 @@
+Iniciando Benchmark em 28/06/2026  9:56:22,75 
+DPCache Start:  9:56:23,78
+Running inference mode...
+Starting FLUX Inference with DPCache...
+Config: steps=50, order=2
+Using 1 Inference prompt(s)
+Loading FLUX pipeline...
+Loading pipeline components...:   0%|          | 0/7 [00:00<?, ?it/s]Loading pipeline components...:  29%|██▊       | 2/7 [00:00<00:00,  5.85it/s]You set `add_prefix_space`. The tokenizer needs to be converted from the slow tokenizers
+Loading pipeline components...:  43%|████▎     | 3/7 [00:00<00:00,  4.03it/s]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][A
+Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  9.41it/s][ALoading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 12.31it/s]
+Loading pipeline components...:  71%|███████▏  | 5/7 [00:00<00:00,  5.17it/s]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s][A
+Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  4.50it/s][A
+Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.80it/s][ALoading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  3.89it/s]
+Loading pipeline components...:  86%|████████▌ | 6/7 [00:01<00:00,  3.30it/s]Loading pipeline components...: 100%|██████████| 7/7 [00:01<00:00,  4.25it/s]
+Using 3D cost tensor with Dynamic K-Selection. Expected step distance: 5
+Init selected_steps: [np.int64(0), np.int64(1), np.int64(2), np.int64(4), np.int64(7), np.int64(10), np.int64(14), np.int64(19), np.int64(23), np.int64(28), np.int64(34), np.int64(40), np.int64(45)]
+Pipeline ready!
+  0%|          | 0/50 [00:00<?, ?it/s]  0%|          | 0/50 [00:42<?, ?it/s]
+Traceback (most recent call last):
+  File "E:\2026.1\haroldo\Pi p2\DBcache\DPCache\dpcache_flux_infer.py", line 229, in <module>
+    main()
+  File "E:\2026.1\haroldo\Pi p2\DBcache\DPCache\dpcache_flux_infer.py", line 214, in main
+    run_flux(
+  File "E:\2026.1\haroldo\Pi p2\DBcache\DPCache\dpcache_flux_infer.py", line 106, in run_flux
+    image = pipeline(
+            ^^^^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\torch\utils\_contextlib.py", line 120, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\diffusers\pipelines\flux\pipeline_flux.py", line 920, in __call__
+    noise_pred = self.transformer(
+                 ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\torch\nn\modules\module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\torch\nn\modules\module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\accelerate\hooks.py", line 192, in new_forward
+    output = module._old_forward(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\2026.1\haroldo\Pi p2\DBcache\DPCache\dpcache_flux.py", line 86, in dpcache_flux_forward
+    encoder_hidden_states, hidden_states = block(
+                                           ^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\torch\nn\modules\module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Emanuel\miniconda3\envs\naruto_env\Lib\site-packages\torch\nn\modules\module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\2026.1\haroldo\Pi p2\DBcache\DPCache\dpcache_flux.py", line 164, in dpcache_flux_double_block_forward
+    cache_helper.print_schedule_status(action="compute")
+  File "E:\2026.1\haroldo\Pi p2\DBcache\DPCache\dpcache\cache_utils.py", line 193, in print_schedule_status
+    if (not dist.is_initialized() or dist.get_rank() == 0) and self.current["layer"] == 0:
+            ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'torch.distributed' has no attribute 'is_initialized'

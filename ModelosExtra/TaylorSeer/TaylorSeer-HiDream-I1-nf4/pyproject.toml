@@ -1,0 +1,37 @@
+[project]
+name = "hdi1"
+version = "1.0.3"
+description = "HiDream-I1 is a new open-source image generative foundation model with 17B parameters that achieves state-of-the-art image generation quality within seconds."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "accelerate>=1.2.1",
+    "bitsandbytes>=0.45.5",
+    "datasets>=3.5.0",
+    "device-smi>=0.4.1",
+    "diffusers>=0.32.1",
+    "einops>=0.7.0",
+    "flash-attn>=2.7.0",
+    "gptqmodel>=2.2.0",
+    "gradio>=5.24.0",
+    "hf-transfer>=0.1.9",
+    "logbar>=0.0.4",
+    "optimum>=1.24.0",
+    "pillow>=11.1.0",
+    "protobuf>=6.30.2",
+    "sentencepiece>=0.2.0",
+    "setuptools>=78.1.0",
+    "threadpoolctl>=3.6.0",
+    "tokenicer>=0.0.4",
+    "torch>=2.5.1",
+    "torchvision>=0.20.1",
+    "transformers>=4.47.1",
+]
+
+[tool.setuptools.packages.find]
+include = ["hdi1*"]
+
+[project.urls]
+Homepage = "https://github.com/hykilpikonna/HiDream-I1-nf4"
+Repository = "https://github.com/hykilpikonna/HiDream-I1-nf4"
+Issues = "https://github.com/hykilpikonna/HiDream-I1-nf4/issues"

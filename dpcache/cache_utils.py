@@ -190,7 +190,7 @@ class CacheHelper:
         return self.cache_data["cali"] and self.is_last_layer() and self.current["stream"] in self.cache_data["model_config"]["cali_stream"]
 
     def print_schedule_status(self, action: str = "compute"):
-        if (not dist.is_initialized() or dist.get_rank() == 0) and self.current["layer"] == 0:
+        if self.current["layer"] == 0:
             print(f"{action} {'' if action == 'compute' else 'Taylor-DP '}{self.current['stream']} step: {self.current['step']}")
 
     # ===== Cache operations =====
