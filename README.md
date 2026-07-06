@@ -270,7 +270,7 @@ O `benchmark_results.txt` registra a execução dos 3 métodos no hardware AMD. 
 | **Baseline (sem cache)** | 51min 09s | 1.00x | Inferência completa, 50 steps |
 | **TeaCache** (thresh=0.6) | 08min 45s | **~5.8x** | 28 steps, aceleração por diferença L1 |
 | **TaylorSeer** | 15min 00s | **~3.4x** | 50 steps com aproximação de Taylor |
-| **DPCache** (k=13) | — | — | Falhou com `torch.distributed.is_initialized` (bug PyTorch 2.9.1) |
+| **DPCache** (k=13) | 12min 35s  | **4,06x**| 43 steps |
 
 ### Destaques dos Experimentos
 * **Aceleração Sustentada:** Observou-se uma redução consistente de mais de 3x no tempo total de inferência ao aplicar o *Dynamic Programming* para planejamento de trajetória no FLUX.
